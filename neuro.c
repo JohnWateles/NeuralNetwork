@@ -262,7 +262,6 @@ void forwardPropagation(NeuralNetwork* nn){
 void backwardPropagation(NeuralNetwork* nn, type* targets, type learningRate) {
     if (nn->countLayers < 2) {
         raiseError(lenerr);
-        return;
     }
 
     Layer* outputLayer = nn->layers[nn->countLayers - 1];
@@ -283,7 +282,7 @@ void backwardPropagation(NeuralNetwork* nn, type* targets, type learningRate) {
 
         type* newDeltas = NULL;
         if (layerIdx > 1) {
-            newDeltas = (type*)malloc(prevLayer->len * sizeof(type));
+            newDeltas = (type*)calloc(prevLayer->len, sizeof(type));
         }
 
         for (size_t neuronIdx = 0; neuronIdx < currentLayer->len; neuronIdx++) {

@@ -83,7 +83,8 @@ class PixelDrawer:
     def show_predict(self):
         self.nn.forward_propagation()
         output = self.nn.get_output_values()
-        self.update_text("\n".join([f"{index}: {round(value, 5)}" for index, value in enumerate(output)]))
+        argmax = np.argmax(output)
+        self.update_text("\n".join([f"{index}: {round(value, 3)} {"III" if argmax == index else ""}" for index, value in enumerate(output)]))
 
     def update_text(self, message):
         self.text_widget.delete(1.0, tk.END)
